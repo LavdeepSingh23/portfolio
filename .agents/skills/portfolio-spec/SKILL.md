@@ -4,26 +4,26 @@
    ---
 
 
+# Portfolio Site Spec — Editorial Minimal (ReactBits system)
 
-# Portfolio Site Spec — "The Curious Duck" (Celestial Atlas)
+Hybrid model: Dock nav appears after hero (speed for anyone who scrolls a bit), hero CTAs handle immediate recruiter needs. Deploy target: GitHub Pages.
 
-Hybrid model: fixed nav for speed (recruiters), scroll-depth story for anyone who stays (everyone else).
-Deploy target: GitHub Pages.
+Design philosophy: **"Nothing moves unless it has a reason."** Premium, calm, intentional, memorable. Not a ReactBits showcase, not a SaaS landing page, not a space/cyberpunk/gamified theme.
 
 ---
 
 ## 1. Concept in one line
 
-A constellation is a collection of separate stars connected into meaning.
+Curiosity, engineering, research, building, simplicity, confidence — communicated through restraint, not decoration. Recruiters understand the page in 10 seconds; curious visitors can spend several minutes in it. The interface disappears; the content is the experience.
 
-Each project, publication, discovery, and question is a star.
+No mascot, no metaphor-driven branding, no codename. Identity is carried entirely by name + typography, per the "interface disappears" philosophy.
 
-Viewed individually, they are isolated points.
-Viewed together, they reveal a pattern.
-
-That pattern is The Curious Duck — discovered, not announced.
-
-Tagline: **"Following questions wherever they lead."**
+**Tagline — pick one before building the Hero (plain text, no graphic, optional but cheap to include):**
+- "Building things worth explaining."
+- "Curious by default, careful by training."
+- "I ask questions until the data answers them."
+- "Engineering things that started as questions."
+- Or skip the tagline entirely — a strong one-line description under your name works fine too, and is arguably more in line with "typography is the hero, no decorative flourishes."
 
 ---
 
@@ -31,19 +31,20 @@ Tagline: **"Following questions wherever they lead."**
 
 ```
 ┌─────────────────────────────────────────────┐
-│  FIXED NAV (sticky, transparent → solid)     │  ← always available, never gated
-│  Home · Projects · Research · Resume · Contact│
+│  HERO                                        │
+│  Large typography, one text effect, direct   │
+│  CTA row (Resume/GitHub/LinkedIn) — this     │
+│  carries the "recruiter finds it fast" job   │
+│  since Dock isn't visible yet                │
 └─────────────────────────────────────────────┘
-│
-▼ (scroll)
+▼ (hero starts leaving viewport → Dock fades in)
 ┌─────────────────────────────────────────────┐
-│  HERO — surface                              │
-│  constellation, name, one-liner, CTA, current│
-│  observation                                 │
+│  DOCK NAV — appears here, not before         │
+│  Text-labeled, not icon-only                 │
 └─────────────────────────────────────────────┘
 ▼
 ┌─────────────────────────────────────────────┐
-│  LAYER 1 — quick facts strip                 │
+│  LAYER 1 — quick facts strip (Count Up)      │
 └─────────────────────────────────────────────┘
 ▼
 ┌─────────────────────────────────────────────┐
@@ -51,7 +52,7 @@ Tagline: **"Following questions wherever they lead."**
 └─────────────────────────────────────────────┘
 ▼
 ┌─────────────────────────────────────────────┐
-│  LAYER 3 — projects                          │
+│  LAYER 3 — projects (Count Up on stats)      │
 └─────────────────────────────────────────────┘
 ▼
 ┌─────────────────────────────────────────────┐
@@ -67,125 +68,63 @@ Tagline: **"Following questions wherever they lead."**
 └─────────────────────────────────────────────┘
 ▼
 ┌─────────────────────────────────────────────┐
-│  LAYER 7 — vision + contact (final region)   │
+│  LAYER 7 — vision + contact (footer)         │
 └─────────────────────────────────────────────┘
 ```
-
-**Rule that makes this work:** nav is never hidden behind the story. `position: sticky; top: 0` from the first scroll pixel. Every nav link does a smooth-scroll to a section `id`. A recruiter lands, clicks "Projects" or "Resume", done in 3 seconds. Someone curious scrolls the whole thing.
 
 ---
 
 ## 3. Section-by-section detail
 
-### 3.0 Atlas Marker (no navbar)
+### 3.0 Navigation — Dock
+- Use Dock as the primary navigation. No traditional sticky navbar.
+- Appears only once the Hero starts leaving the viewport — feels like a tool becoming available, not something permanently occupying the screen.
+- **Must use clear text labels, not icon-only glyphs** — Projects / Research / Resume / Contact. A recruiter shouldn't have to guess what an icon means.
+- Resume stays visually distinct within the Dock.
 
-No fixed navigation bar. A small, static, non-interactive marker sits
-top-left for the entire scroll:
+### 3.1 Hero — typography-first, no illustration
+This is the most important section. Extremely clean. No profile card, no hero illustration, no decorative graphics. The typography *is* the hero.
 
-    ✦ The Curious Duck
+**Content philosophy:** the hero introduces a mindset before a resume line. It should answer "what kind of person is this" before "what technologies does he know." Lead with how you approach problems; let the degree/tools land as a quieter, secondary line — not the headline. Plain, honest language — no metaphor, no aphorism-for-its-own-sake. The words need to be trustworthy, not impressive.
 
-- Playfair Display, caption-sized, muted gold (#B89555) or secondary
-  text color (#A8A8B3) — understated, reads as a mark of provenance,
-  not a menu trigger.
-- No click behavior, no dropdown, no scroll-to links, no background
-  change on scroll. Stays exactly as-is from top to bottom of the page.
-- Exists only so the page doesn't feel directionless with zero chrome.
-  Plays no role in the recruiter fast-path — that's carried entirely
-  by the Hero's reference marks (§3.1).
+**Components used:**
+- Dot Grid as background (global — see 3.9)
+- **Text Pressure on the main heading — locked decision.** Do not also add Type Text or any other text effect anywhere in the hero; the heading effect is the hero's one moment of motion, full stop.
+- Click Spark enabled (global — see 3.9)
 
-### 3.1 Hero — "The Curious Duck Constellation"
-
-Two-column layout, deep space aesthetic. Core metaphor: a constellation
-is separate stars connected into meaning — your projects, research, and
-questions are the stars, together forming a duck shape that's
-discovered, not announced, over the course of the scroll.
-
-**Layout — Desktop:** left column text, right column constellation SVG.
-**Layout — Mobile:** constellation on top, then text, then CTA marks.
-
-**Left side content:**
-- Small serif label: "ANATIS CURIOSA · Catalog Entry · 2024–Present"
-  (Playfair Display, decorative only, never body text)
-- Name in Inter, large
-- Tagline: "Following questions wherever they lead."
-- Short description (2-3 lines), plain first person — who you are,
-  what you study, what you're working on. Write it the way you'd
-  actually say it. No specimen/field-log narration, no "sighted," no
-  "currently charting behavior in" — the atlas feeling is carried by
-  the visual system (constellation, grid, typography), not by the
-  sentence structure. Say things directly and honestly.
-- Current Observation panel — same plain voice, one honest sentence
-  about what you're actually working on right now. Only keep this
-  section if you'll actually update it.
-- Reference marks (not buttons): Resume / GitHub / LinkedIn styled as
-  catalog footnotes — e.g. "REF. 01 — RESUME" — small caps or Playfair
-  numerals, gold text, no button background or border, clear hover
-  state. Same visual prominence as before: a recruiter should reach
-  these in the first viewport, no scrolling or clicking through a menu.
-
-**Right side — the constellation (centerpiece):**
-- Custom SVG duck-shaped constellation, 8 real stars with real labels
-  (not fake Latin): Curiosity (head), Research (heart), ML Systems
-  (wing), Data Analytics (wing extension), Building (body), IEEE 2025
-  (tail), Thapar CE (foot), Projects (foot). Bayer-style prefixes fine
-  (α ML Systems, β Research, etc.) — real astronomical convention.
-- Ghost duck outline behind the stars at ~0.05 opacity max — barely
-  visible, discovered not announced.
-- Background: deep matte black (#0A0A0F), extremely faint coordinate
-  grid + concentric circles, minimal scattered stars.
-
-***Progressive reveal (revised — zero-state Hero):**
-- On initial load: no stars, no lines, no ghost duck. Hero shows only
-  the left-column text (label, name, tagline, description, Current
-  Observation, reference marks) against the empty grid/star-field
-  background. The constellation space is visually present (grid,
-  faint background stars) but the duck constellation itself hasn't
-  started yet.
-- First scroll trigger (into the first section past Hero, e.g.
-  #quick-facts): reveals the initial pair — Curiosity + Building —
-  together, with one fully-drawn connecting line, in the same beat.
-  Never reveal a single isolated star with no line first; the first
-  reveal must land as a complete two-star shape, same as the old
-  on-load state, just delayed to this trigger point instead.
-- Each subsequent section trigger adds one more star + its connecting
-  line + label, same as before: same animation timing, toggleActions
-  "play none none none" (no reverse on scroll-up), label appears in
-  the same beat as the line.
-- Reduced motion: full 8-star constellation shows immediately on load
-  (unchanged from before — this bypasses the whole sequence).
-
-**Color system, typography:** unchanged — see palette table in §11 and
-Inter/Playfair rules.
-
-**Avoid:** neon colors, excessive animation, dashboard aesthetics,
-cartoon duck mascot, floating particles, shooting stars, rotating
-planets, generic AI-generated look, water/ocean imagery.
+**Content:**
+- Name, large
+- A mindset-first line (how you approach problems), written in your own voice, not a template
+- A quieter second line naming the current toolbox (software, data, research) — supporting detail, not the headline
+- Optional tagline (plain text, no graphic) — pick one that sounds like you, or skip it entirely
+- CTA row: Resume (visually strongest), GitHub, LinkedIn — these must work immediately, since Dock isn't visible yet
 
 ### 3.2 Layer 1 — quick facts strip
-Lead with the differentiators, not the number everyone has. CGPA lives on the resume PDF, not the homepage headline.
+CGPA lives on the resume PDF, not the homepage headline. Lead with differentiators. No self-applied identity labels here — facts, not a category.
 
 | Fact | Value |
 |---|---|
 | Program | B.E. Computer Engineering, Thapar, 2024-2028 |
 | Publication | IEEE ComputingCon 2025 |
 | Fellowship | Undergraduate Research Fellowship (URF) 2026 |
-| Focus | ML systems + data analytics |
 
-Small, scannable stat cards or a single divided line. Under one screen height.
+Dropped the old "Focus: ML systems + data analytics" row deliberately — it over-identified the site with one tool rather than the problems behind it. If a fourth row is wanted, keep it non-reductive (e.g. "Approach: engineering + research"), not a technology label.
+
+Any numeric values here use Count Up, once, on entering viewport. Never animate plain text with Count Up.
 
 ### 3.3 Layer 2 — curiosity ("questions worth chasing")
-Sits between facts and projects. This is the narrative hinge — it reframes projects as answers to questions, not a checklist.
+Sits between facts and projects — reframes projects as answers to questions, not a checklist.
 
-3-4 short question cards, one per project family, e.g.:
-- Can batteries tell us when they'll die?
-- Why do buildings waste energy at scale?
-- Can machines learn to recognize duplicates from very little labeled data?
-- Can data replace guesswork in how a college runs itself?
+**Content philosophy — important:** the questions must be genuine curiosity that came *before* the project, not a project title reverse-engineered into question form. A reader should be able to imagine the person actually wondering this, not recognize a marketing rephrase of a deliverable. The placeholder questions from earlier drafts (e.g. "Can batteries tell us when they'll die?") were exactly this failure mode and need to be replaced with real ones.
 
-Keep each to one line. No answers here — the payoff comes in the next section. Scroll cue at the bottom of this section into Projects.
+**How to write these for real:** for each project, identify the actual moment that came first — a frustration, an offhand "wait, why does it do that," a supervisor's suggestion you got interested in, a reading that raised a question. Write it the way it was actually thought, not the way a portfolio wants it to sound. "My supervisor suggested this and I got interested" is a fine, honest curiosity story — it doesn't need an invented eureka moment.
+
+3-4 short question cards, one line each. No answers here — payoff comes in Projects. Section headings use Variable Proximity (subtle, cursor-reactive, nothing exaggerated).
 
 ### 3.4 Layer 3 — projects
-Four cards, real numbers from your CV — don't soften these into vague bullets:
+Content-first. No fancy cards, no 3D, no exploding interactions.
+
+**Content philosophy:** projects are evidence, not achievements. Each project should communicate the problem, why it mattered, what you built, and what you learned — not just a list of metrics. Metrics stay visible (numeric stats use Count Up once on viewport entry) but support the story rather than being the story. This is a content-shape change only — same ProjectCard visual layout, a short 2-3 sentence problem/build/learning narrative plus the existing stat line beneath it, not four bare stat bullets.
 
 **Enerlytics AI — ML Energy Optimization** (Python, Scikit-Learn, PCA, K-Means, Streamlit, 2026)
 - Analyzed 52,585 buildings, segmented into 4 behavioral clusters
@@ -209,140 +148,132 @@ Four cards, real numbers from your CV — don't soften these into vague bullets:
 - Benchmarking TF-IDF vs Sentence-BERT with K-Means/DBSCAN
 - Evaluation framework against known duplicate links
 
-Card layout: tech stack pills + 3-4 bullet stats + GitHub link. Surface numbers visible without clicking — recruiters scan, they don't click to reveal.
+Layout prioritizes readability over visual flourish. Optional very-low-opacity Pixel Blast accent behind this section — **defer to V1.5** (see section 5).
 
 ### 3.5 Layer 4 — research
-- **Published:** *Enhanced Diabetes Prediction using Ensemble Learning and Sparse PCA* — IEEE ComputingCon 2025. Ensemble pipeline (RF/XGBoost/CatBoost) + Sparse PCA, Optuna tuning, 94.6% accuracy, 92.9% F1. Link to IEEE Xplore.
-- **In progress:** a short, honest line about the EV battery RUL work — keep this vague on specifics since it's unpublished and tied to your supervisor's name. **Check with your supervisor before putting any specifics of unpublished research on a public site** — not your call alone to make public.
+
+**Content philosophy:** exploration, not publication. Lead with the question that drove the research and what's being learned systematically — the publication is an outcome mentioned in passing, not the section's opening claim. This is "I chased this question seriously enough that it became a paper," not "here is my paper."
+
+- **Published:** open with what you were trying to understand, then note it became *Enhanced Diabetes Prediction using Ensemble Learning and Sparse PCA* — IEEE ComputingCon 2025 (ensemble pipeline, Sparse PCA, Optuna tuning, 94.6% accuracy, 92.9% F1 — kept visible, just not the lead sentence). Link to IEEE Xplore.
+- **In progress:** a short, honest line about the EV battery RUL work, framed as an open question you're still working through — keep vague on specifics, unpublished, tied to your supervisor. **Check with your supervisor before publishing any specifics** — not your call alone.
+
+**Layout for V1: a clean static layout, not Card Stack.** With only two entries, a stack metaphor will look sparse. Revisit Card Stack only if/when this section grows to 3+ real entries — it's a V1.5 idea, not a V1 build.
 
 ### 3.6 Layer 5 — what surprised me
-Same substance as a typical "failures" section, better frame. Sounds like a researcher reporting findings, not someone apologizing:
-- Transformers underperformed GRU/LSTM on your smaller datasets — a real, useful finding
-- Capacity turned out to dominate feature importance over other signals you expected to matter
-- A Physics-Informed Neural Network direction was suggested and you navigated around it given implementation constraints — say what constraint, briefly, and what you did instead
+This should be one of the most memorable sections on the site — genuine lessons that changed how you think, not motivational quotes or productivity advice. Sounds like a researcher reporting findings, not someone apologizing:
+- Transformers underperformed GRU/LSTM on your smaller datasets — a real, useful finding. Add the "so what": how that changed how you now think about model choice on small datasets.
+- Capacity turned out to dominate feature importance over other signals you expected to matter — add what that shifted in how you approach feature selection now.
+- A Physics-Informed Neural Network direction was suggested and you navigated around it given implementation constraints — say what constraint, briefly, what you did instead, and what it taught you about scoping a research direction.
 
-Keep this section short — 3-4 lines. The point is credibility, not a confessional.
+Short — 3-4 lines each. Credibility, not confession. The addition here is the "so what" half-sentence — the fact alone is a result, the fact plus its effect on your thinking is a lesson.
 
-### 3.7 Layer 6 — thoughts / curiosities
-Lightweight, can start as a placeholder:
+### 3.7 Layer 6a — how I work (new, optional but recommended)
+3 concrete principles max, each grounded in something you actually did — not abstract aphorisms. This is the most direct way to demonstrate the mindset-first framing from the Hero, rather than just claim it. Costs nothing structurally: reuse the same simple list layout as the Surprises section, no new component, no new visual system. Keep it to 3 items or it drifts into "sounding deep for its own sake," which is explicitly the wrong register for this site.
+
+### 3.7 Layer 6b — "Questions I'm Following" (renamed from "Thoughts")
+Deliberately echoes "questions worth chasing" from the Curiosity section — the site opens and closes on the same idea. Lightweight, can start as placeholder:
 - "Currently thinking about: [whatever you're actually into]"
-- If no blog yet, use 3-4 short "currently exploring" cards instead of full posts. Don't fake a blog with dummy posts — an honest empty placeholder beats fake content.
+- 3-4 short "currently exploring" cards instead of full posts if no blog yet. An honest empty placeholder beats fake content.
 
-### 3.8 Layer 7 — vision + contact (final mapped region)
-- Short paragraph on what you're building toward — frame around solving problems with data (analytics → decisions → impact), matching the direction your actual project mix points toward.
-- Final CTA row: Resume download, email, LinkedIn, GitHub, LeetCode. Make contact info impossible to miss.
+### 3.8 Layer 7 — vision + contact (footer)
+- Short paragraph framed around the kinds of problems you want to keep chasing — not a target job title or career-ladder statement. Same signaling function as before, but stays in the same honest, non-performative voice as the rest of the site.
+- Final CTA row: Resume download, email, LinkedIn, GitHub, LeetCode. Impossible to miss — this mechanic is unchanged.
 
 ---
 
-## 4. Animation approach
-**Hero constellation — progressive reveal (supersedes "on load" full draw):**
-- On load: only the initial 2-3 stars (per §3.1) draw in — background
-  stars fade first, then the initial constellation lines self-draw via
-  `path.getTotalLength()`, then those stars' labels fade in with them,
-  then left-column text fades upward. No other stars are present yet.
-- On scroll: each layer's star activates via ScrollTrigger tied to that
-  section's boundary — line draws in, label fades in, same easing/
-  timing as the initial on-load reveal so every activation feels like
-  the same event happening again, not a different animation.
-- Ongoing idle behavior (slow star pulse) applies only to
-  already-revealed stars.
-- Reduced motion: all stars in the final "fully revealed" state show
-  immediately, no draw-in sequence at any scroll position.
+## 4. Visual language & color system
 
-**Hero constellation (interaction):**
-- Gentle mouse-parallax, max 5-10px movement. Constellation shifts slightly, grid shifts even less.
-- Structure the SVG with separate `<g>` groups for background-grid, constellation, and ghost-duck so each layer can have an independent parallax transform
-- Throttle the mousemove handler with `requestAnimationFrame` — don't recalculate on every raw event
-- **Touch devices:** skip mouse-parallax entirely, static constellation, no hover-dependent behavior
+**Never:** gradients, neon, glassmorphism, glowing borders, floating blobs, unnecessary cards, visual clutter, blue glows, bright purple, saturated colors, cyberpunk/futuristic-dashboard/game-UI/cartoon look.
 
-**Atlas Depth Background (persistent, spans the whole page):**
+**Always:** minimal, editorial, large typography, generous whitespace, dark interface.
 
-A single tall, pre-composed background — not a per-frame procedurally-recalculated canvas. Density and layout are baked into one full-page-height SVG/canvas asset generated once (sparse near the top, denser toward the bottom), so no live star-position math runs on scroll. This keeps it cheap and jank-free, especially on mobile.
+| Token | Value |
+|---|---|
+| Background | #030303 |
+| Primary text | #F5F5F5 |
+| Secondary text | #B5B5B5 |
+| Accent | Warm white or muted gold only |
 
-Structure: `AtlasBackground.jsx` renders as `position: absolute; inset: 0; z-index: 0` inside a `position: relative` full-height page wrapper — it scrolls naturally with the page like any other tall element, no manual scroll-repositioning needed. All section content sits at `z-index: 1` with the same base background color (`#0A0A0F`), so there are no visible seams between sections — the depth feel comes from what's happening in the shared backdrop, not from section-to-section color changes.
-**Catalog-style headings:** every layer heading (Quick Facts, Curiosity,
-Projects, Research, etc.) is styled as a coordinate/catalog entry rather
-than a standard heading — e.g. "II. PROJECTS — CHARTED WORK," Playfair,
-small, gold — reinforcing one continuous atlas rather than stacked pages.
+No third accent color. No ad-hoc colors an agent might default to.
 
-**No boxed containers:** where the rgba(10,10,15,0.85) readability
-backdrop is needed behind content, feather the edge with a soft
-gradient falloff rather than a hard-edged rectangle, so cards read as
-regions of the same map, not bounded panels sitting on top of it.
+---
 
-Depth zones (baked into the asset + a few lightweight ScrollTrigger-toggled layers on top):
+## 5. Component system (ReactBits) — scope: V1 vs V1.5
 
-| Section | Star density | What's added |
+Each component has exactly one job. If two components solve the same problem, remove one.
+
+**V1 — build these:**
+
+| Component | Job | Where |
 |---|---|---|
-| Hero | Sparse (~15-20 stars/viewport) | Home constellation fully visible, prominent |
-| Curiosity | Moderate increase | Grid slightly more visible |
-| Projects | Higher | 2-3 small pre-drawn neighboring constellation clusters (unlabeled dot+line groups) fade in near section edges via ScrollTrigger — suggests nearby charted territory, not just noise |
-| Research | Highest | Coordinate grid opacity/scale increases subtly; optional very-low-opacity decorative coordinate-style labels (e.g. faint "RA/Dec" style numerals) — purely atmospheric, never legible-priority |
-| Vision | Thins out again | Sparser, more black space — "edge of the mapped territory" feeling; home constellation may reappear very faintly as a callback |
+| Dot Grid | Global atmosphere background | Entire site |
+| Text Pressure | Hero identity (locked — no other text effects in hero) | Hero only |
+| Dock | Navigation | Appears after Hero leaves viewport |
+| Variable Proximity | Subtle heading reactivity | All section headings |
+| Count Up | Numeric values only | Facts strip, project stats |
+| Click Spark | Click feedback | Global, subtle |
 
-On top of the static asset, only two things are actually scroll-animated:
-- **Parallax offset:** background scrolls at ~0.8x the speed of foreground content (`transform: translateY()`, GPU-cheap) for a depth cue
-- **Neighboring constellation fade-in/out:** 2-3 clusters near Projects, toggled by ScrollTrigger based on section visibility, not continuous recalculation
+**V1.5 — defer:**
 
-**Readability rule (non-negotiable):** content cards (project cards, research block, etc.) get a subtle near-solid backdrop — `rgba(10,10,15,0.85)` — so increased background density shows through the margins and negative space, never directly behind body text. The denser the background gets, the more this backdrop matters — check Projects and Research sections specifically during the mobile pass.
+| Component | Job | Where | Why deferred |
+|---|---|---|---|
+| Pixel Blast | Section accent, extremely low opacity | Behind Projects/Research | Second background system on top of Dot Grid — real build/perf cost for two sections; add once V1 is live |
+| Card Stack | Document-browsing interaction | Research | Only 2 real items currently — will look sparse; revisit once Research has 3+ real entries |
 
-**Reduced motion:** the density gradient itself isn't motion (it's a static image), so it stays for `prefers-reduced-motion` users. Disable the parallax speed offset and constellation fade transitions — show them in their final visible state immediately instead.
+**Explicitly removed — do not build these:** Bubble Menu, Profile Card, Lanyard, Scrambled Text, Galaxy, Grid Scan, Dither as background, Radar, heavy particle systems, cyberpunk effects, neon lighting, infinite spinning elements.
 
-**Mobile:** the parallax speed differential can feel janky on touch scroll — reduce or remove it on small viewports. Keep the density backdrop unchanged (it's just an image, no touch-scroll conflict there).
-
-**Rest of the site:**
-- **GSAP + ScrollTrigger** also handles the existing per-section darkening/reveal transitions as you move through sections. Free, well-documented.
-- Skip Three.js/WebGL — not needed for this concept.
-
-**Non-negotiable:** wrap all animation (stroke-draw, parallax, scroll-linked effects) in a `prefers-reduced-motion` check — show the final static state immediately for users with that preference.
-
-**Explicitly avoid:** floating particles, shooting stars, galaxy effects, rotating planets, excessive glow, constant/idle movement beyond the very subtle star pulse. No water, ripple, wave, or diving imagery anywhere — that concept has been fully replaced.
+**Consistency rule:** never combine multiple text effects on the same element. Never use Count Up on non-numeric text. Nothing loops forever — every animation finishes.
 
 ---
 
-## 5. Scope: V1 vs V1.5
+## 6. Motion philosophy
 
-Don't let polish ideas delay shipping. Split like this:
+Calm, measured, responsive, physical, intentional. Nothing loops forever. Nothing constantly demands attention. Every animation finishes.
 
-**V1 (ship this during placement season):**
-- Full 7-layer structure above, one fully-realized constellation hero (grid + stars + ghost duck + labels), no simplified placeholder version
-- All content sections real, no placeholder fake data
-- Nav, resume, contact all working
-- Deployed live on GitHub Pages
+**Non-negotiable:** respect `prefers-reduced-motion` — disable all motion and show final static states instantly for users with that preference. Maintain 60fps; reduce motion on low-powered devices. Do not sacrifice performance for visual effects.
 
-**V1.5 (after launch, when you have slack):**
-- Additional stars and connecting lines that appear as the user scrolls into deeper layers — visually extending the atlas map as more of your work is revealed, rather than a static hero-only constellation
-- Richer parallax depth across sections (subtle layered star-field density changes per section)
-- Actual blog posts replacing the "currently exploring" placeholder cards
-
-A site that ships with one well-executed constellation beats a site still in progress because it's chasing multi-stage mascot animation or extra visual effects.
+**Implementation risk to test early:** Dot Grid and Pixel Blast are typically canvas/WebGL-based (via libraries like `ogl`). Test Dot Grid alone on an actual mid-range mobile device before adding any other component on top of it — this is the most likely place your 60fps rule breaks, and it's cheaper to catch before building five more things on top of a laggy base layer.
 
 ---
 
-## 6. Tech stack recommendation
+## 7. Final design test — apply to every proposed feature before building it
 
-**Vite + React + TailwindCSS + GSAP (ScrollTrigger)**
+1. Does this improve usability?
+2. Does this improve storytelling?
+3. Will recruiters still understand the page immediately?
+4. Would this still look premium three years from now?
+5. Is this component helping, or simply showing off?
 
-Why: Vite builds to plain static files (what GitHub Pages needs), React keeps sections as reusable components, Tailwind for fast styling, GSAP for reliable scroll animation, native SVG for the constellation.
-
-Skip: Next.js (no SSR needed), Three.js (no 3D needed), any backend/database (GitHub Pages is static-only).
+If the answer to #5 is "showing off," remove it — regardless of how the other four answered.
 
 ---
 
-## 7. Suggested folder structure
+## 8. Tech stack recommendation
+
+**Vite + React + TailwindCSS + ReactBits components (Dot Grid, Text Pressure/Type Text, Dock, Variable Proximity, Count Up, Click Spark)**
+
+ReactBits components are typically added per-component — either via their CLI or by copying the component code directly from each component's page on reactbits.dev, not as a single npm package. Check each component's own docs page for its exact install method and peer dependencies (some canvas-based ones need extra packages like `ogl`) before adding it.
+
+Skip: Next.js (no SSR needed), any backend/database (GitHub Pages is static-only), GSAP (not needed for this system — ReactBits components handle their own animation internally).
+
+---
+
+## 9. Suggested folder structure
 
 ```
 portfolio/
 ├── public/
-│   ├── resume.pdf
-│   └── constellation/      (star field, constellation path data, ghost-duck SVG assets,
-│                            full-page depth-gradient background asset)
+│   └── resume.pdf
 ├── src/
 │   ├── components/
-│   │   ├── AtlasBackground.jsx
-│   │   ├── Nav.jsx
+│   │   ├── reactbits/          (copied-in library components, unmodified logic, re-skinned via props/CSS vars)
+│   │   │   ├── DotGrid.jsx
+│   │   │   ├── TextPressure.jsx    (or TypeText.jsx — pick one)
+│   │   │   ├── Dock.jsx
+│   │   │   ├── VariableProximity.jsx
+│   │   │   ├── CountUp.jsx
+│   │   │   └── ClickSpark.jsx
 │   │   ├── Hero.jsx
-│   │   ├── CurrentInvestigation.jsx
 │   │   ├── QuickFacts.jsx
 │   │   ├── Curiosity.jsx
 │   │   ├── Projects.jsx
@@ -350,8 +281,7 @@ portfolio/
 │   │   ├── Research.jsx
 │   │   ├── Surprises.jsx
 │   │   ├── Thoughts.jsx
-│   │   ├── Vision.jsx
-│   │   └── Footer.jsx
+│   │   └── Vision.jsx
 │   ├── data/
 │   │   ├── projects.js
 │   │   ├── questions.js
@@ -368,14 +298,13 @@ portfolio/
 
 ---
 
-## 8. GitHub Pages deployment
+## 10. GitHub Pages deployment
 
 1. In `vite.config.js`, set `base: '/your-repo-name/'` (required — without this, assets 404 on Pages).
 2. Simplest path: `npm install --save-dev gh-pages`, add to `package.json`:
    ```json
    "scripts": { "deploy": "vite build && gh-pages -d dist" }
    ```
-   then `npm run deploy` pushes `dist/` to a `gh-pages` branch. Turn on Pages in repo settings pointing to that branch.
 3. Cleaner path (recommended): GitHub Actions workflow that builds and deploys on every push to `main`:
    ```yaml
    name: Deploy to GitHub Pages
@@ -407,100 +336,39 @@ portfolio/
          - id: deployment
            uses: actions/deploy-pages@v4
    ```
-4. Custom domain (optional, later): add a `CNAME` file in `public/` with your domain, point DNS to GitHub Pages IPs.
-5. **Contact form:** no backend on GitHub Pages — use Formspree or EmailJS (free tiers) for a client-side form submission.
+4. Custom domain (optional, later): add a `CNAME` file in `public/` with your domain.
+5. **Contact form:** no backend on GitHub Pages — use Formspree or EmailJS (free tiers).
 
 ---
 
-## 9. Build order (what to prompt Antigravity, in sequence)
+## 11. Build order (what to prompt Antigravity, in sequence)
 
-1. Scaffold: Vite + React + Tailwind project, basic scroll structure, empty section components
-2. Nav component with sticky behavior + smooth scroll to section IDs
-3. Build the Hero component using the **final constellation design directly** — do not build an intermediate floating-duck-bob hero. Implement in one pass: atlas grid background, constellation stars/lines, ghost duck, labels, CTA layout, and the full animation/interaction spec from section 4 (stroke-draw via `getTotalLength()`, layered parallax groups, reduced-motion guard, touch fallback, throttled mousemove). This is the highest-design-risk section — review the Implementation Plan carefully before proceeding.
-4. Quick facts strip
-5. Curiosity section — build `data/questions.js` first, then the card layout
-6. Projects section — build `data/projects.js` first, then `ProjectCard.jsx` that maps over it
-7. Research section
-8. "What surprised me" section
-9. Thoughts section (placeholder cards)
-10. Vision + footer/contact
-11. Build `AtlasBackground.jsx` per @SPEC.md section 4's Atlas Depth Background spec — the static density-gradient asset, parallax offset, and neighboring-constellation fade-ins. Build this once all sections exist so the ScrollTrigger zones can reference real section boundaries.
-12. GSAP ScrollTrigger pass — wire up the depth/darkening effect across sections once everything exists (do this last)
-13. Mobile pass — test every section at 375px width, simplify animations where needed, add the content-card readability backdrop, reduce/remove background parallax on small viewports
-14. GitHub Actions deploy workflow
-15. **(V1.5, later)** Additional scroll-revealed stars/connections per section 5, once V1 is live
+0. **Fresh folder, terminal, before anything else** (zero credits):
+   - Create the new project folder from scratch (safe to fully delete the old one — this spec is self-contained, nothing from the old folder is needed).
+   - Immediately, before opening Antigravity at all:
+     ```
+     git init
+     ```
+   - Save this file as `SPEC.md` in the folder root, create `.agents/skills/portfolio-spec/SKILL.md` with this same content pasted below its metadata header, then:
+     ```
+     git add SPEC.md .agents/skills/
+     git commit -m "spec and skill files, editorial minimal, fresh start"
+     ```
+   - Only after this commit exists, open Antigravity and create the project pointing at this folder. This is the one habit from last time worth keeping — everything else can start clean.
+1. `Set up a new Vite + React + TailwindCSS project inside this folder. Reference @SPEC.md section 8 for the tech stack and section 9 for the folder structure. Scaffold empty components only, don't fill content. Do not delete or overwrite SPEC.md or the .agents/skills folder.`
+2. `Add the Dot Grid component from ReactBits per @SPEC.md section 5 — global background, re-skinned to neutral white/warm gray dots per section 4's color palette, subtle cursor reaction, no aggressive glow. Test this alone on a simulated low-end mobile viewport before continuing — flag if frame rate seems at risk.`
+3. `Build the Hero component per @SPEC.md section 3.1 — large typography, no illustration, Text Pressure on the main heading only (no other text effects anywhere in the hero), direct CTA row for Resume/GitHub/LinkedIn, Click Spark enabled.`
+4. `Build the QuickFacts component per @SPEC.md section 3.2 with Count Up on the numeric values only.`
+5. `Build the Dock navigation per @SPEC.md section 3.0 — text-labeled items, appears once Hero starts leaving viewport.`
+6. `Create data/questions.js and the Curiosity component per @SPEC.md section 3.3, with Variable Proximity on the section heading.`
+7. `Create data/projects.js with the four projects from @SPEC.md section 3.4, then build ProjectCard.jsx and Projects.jsx with Count Up on the numeric stats.`
+8. `Build the Research component per @SPEC.md section 3.5 using a clean static layout, not Card Stack (see V1 scope note).`
+9. `Build the Surprises component per @SPEC.md section 3.6.`
+10. `Build the Thoughts component per @SPEC.md section 3.7 as placeholder cards.`
+11. `Build the Vision/footer component per @SPEC.md section 3.8.`
+12. `Test every section at 375px width using the browser subagent, confirm 60fps holds with Dot Grid running, and verify prefers-reduced-motion disables all motion correctly.`
+13. `Set vite.config.js base to '/repo-name/' and create the GitHub Actions workflow from @SPEC.md section 10.`
 
-Content-first, animation-last means you always have a working (if plain) site at any point in the process.
+**Visual checks:** screenshot every 2-3 steps, not every single one. **Data entry** (`projects.js`, `questions.js`, `resume.pdf`) — do yourself, don't spend agent credits on it.
 
----
-
-## 10. Execution guide — running this in Antigravity
-
-**Setup:** install from antigravity.google/download, sign in with Google account.
-
-**Project:** create a local folder (e.g. `~/portfolio`), then in Antigravity: Select Project → New Project → Add Folder → that folder → Default permissions → Create.
-
-**Load this spec into the project:** copy this file into the project root as `SPEC.md`. Reference it in every prompt with `@SPEC.md` so the agent has full context without retyping. Optional pro move: turn it into a project Skill at `.agents/skills/portfolio-spec/SKILL.md` (with a `name`/`description` header) so it auto-loads without needing `@` every time.
-
-**Build order — one prompt per stage, same conversation thread, review each Implementation Plan before clicking Proceed:**
-
-0. **BEFORE anything else** — in the project folder terminal, manually run:
-   ```
-   git init
-   git add SPEC.md .agents/skills/
-   git commit -m "spec and skill files"
-   ```
-   Do this yourself, don't ask the agent — it takes 10 seconds and means SPEC.md and the skill folder can never be silently wiped by a scaffolding tool again. Commit again after every major stage below (`git add -A && git commit -m "stage X done"`) — cheap insurance, zero credits.
-1. `Set up a new Vite + React + TailwindCSS project inside this folder. Reference @SPEC.md section 6 for the tech stack and section 7 for the folder structure. Just scaffold empty components for now, don't fill content yet. Do not delete or overwrite SPEC.md or the .agents/skills folder.`
-2. `Build the Nav component per @SPEC.md section 3.0 — sticky, transparent over hero, solid background after scrolling, smooth scroll to section IDs, a small constellation glyph as wordmark (not a literal duck icon), mobile hamburger with Resume button always visible outside it.`
-3. `Build the Hero component per @SPEC.md section 3.1, using the full animation and interaction spec from section 4. Implement the final constellation design directly — atlas grid background, star nodes with real labels, connecting lines that self-draw using path.getTotalLength(), the ghost duck at ~0.05 opacity, layered <g> groups for independent parallax (grid/constellation/ghost-duck), throttled mousemove with requestAnimationFrame, a prefers-reduced-motion fallback that shows the static final state, and no parallax on touch devices. Strictly follow the design constraints in @SPEC.md section 11 — this should look like a restrained research notebook, not a generic AI-generated site.`
-4. `Build the QuickFacts component per @SPEC.md section 3.2.`
-5. `Create data/questions.js and the Curiosity component per @SPEC.md section 3.3.`
-6. `Create data/projects.js with the four projects from @SPEC.md section 3.4, then build ProjectCard.jsx and Projects.jsx.`
-7. `Build the Research component per @SPEC.md section 3.5.`
-8. `Build the Surprises component per @SPEC.md section 3.6.`
-9. `Build the Thoughts component per @SPEC.md section 3.7 as placeholder cards.`
-10. `Build the Vision and Footer components per @SPEC.md section 3.8.`
-11. `Build AtlasBackground.jsx per @SPEC.md section 4's Atlas Depth Background spec — a single pre-composed full-page-height density gradient (not a per-frame recalculated canvas), with parallax offset and 2-3 neighboring constellation clusters that fade in near the Projects section via ScrollTrigger. Add the rgba(10,10,15,0.85) readability backdrop to content cards.`
-12. `Add GSAP ScrollTrigger per @SPEC.md section 4 — scroll-linked background darkening across layers. Respect prefers-reduced-motion.` (do this last, after all content is real)
-13. `Test every section at 375px width using the browser subagent, simplify animations for mobile, and reduce/remove the background parallax offset on small viewports.`
-
-**Visual checks:** use `/browser` or ask the agent to launch the dev server and screenshot the current state — do this every 2-3 sections, not just at the end.
-
-**Deploy:**
-1. Create an empty repo on github.com first (Antigravity can push, but can't create the remote repo).
-2. `Initialize git, add a .gitignore for node_modules, commit, set remote to <your-repo-url>, push to main.`
-3. `Set vite.config.js base to '/repo-name/' and create the GitHub Actions workflow from @SPEC.md section 8.`
-4. Push the workflow, then set repo Settings → Pages → source to "GitHub Actions". Every push after this auto-deploys.
-
-**Tips:** keep the security preset on review-required until you trust the output, then loosen it. Use Antigravity IDE alongside the standalone app if you want to hand-edit component code directly. Rename each conversation thread per section (`conv-hero`, `conv-projects`, etc.) as a build log.
-
----
-
-## 11. Design Constraints — Avoiding "AI Slop"
-
-Persistent rules. Reference this section (`@SPEC.md section 11`) in any visual/design prompt, or better — since this is in the skill file too, it should auto-apply. Goal: looks like a curious academic's personal atlas, not a generated SaaS landing page.
-
-**Never:**
-- Default purple-to-blue gradient backgrounds — the single biggest tell of an unstyled AI-generated site
-- Glassmorphism / frosted-blur cards unless deliberately and sparingly chosen
-- The generic "icon + bold title + one-line description" card grid repeated identically for every section — vary layout per section
-- Emoji as icons or bullets in any content-facing section — never in nav, CTAs, or project cards
-- Excessive box-shadow stacking or neumorphism — contrast and restraint carry the design, not shadow layering
-- Stock-photo-style or AI-generated raster imagery — everything custom SVG/vector, matching the constellation visual language
-- Ad-hoc colors outside the defined palette — no random blue/green/purple accents an agent might default to
-- A third font sneaking in "for flourish" — Inter + Playfair Display only, and Playfair only for the catalog-label accent
-- Any water/ocean/diving imagery, ripple effects, or literal cartoon duck mascot — fully replaced by the constellation concept
-
-**Always:**
-- Strict palette adherence: `#0A0A0F` background, `#F4F4F2` primary text, `#A8A8B3` secondary text, `#D4B16A` constellation gold, `#B89555` muted gold, faint gold rgba for grid/ghost elements only
-- Generous whitespace — an atlas breathes, it doesn't cram content into dense grids
-- Restraint in motion — subtle, slow, purposeful (see section 4). If an animation doesn't serve the "discovery" narrative, cut it.
-
-**Visual hierarchy rule:** the constellation is always the visual hero. The grid exists to support the constellation. The ghost duck exists to support the constellation. Neither should compete for attention. If a user notices the grid before the constellation, the design has failed.
-
-**Handcrafted rule:** the portfolio should feel handcrafted. If a design element exists only because it looks impressive, remove it. Every visual element must support at least one of: curiosity, exploration, mapping, discovery. If it doesn't support one of those themes, it doesn't belong on the site.
-
-**Litmus test before adding any visual element:** would a real astronomical atlas or research notebook have this? If not — badges, confetti, glow-everything, decorative icons, gradient blobs — cut it.
-
-**Prompt habit:** end style-sensitive prompts with something like — *"Keep it restrained, follow @SPEC.md section 11 — this should look like a research notebook, not a SaaS landing page."*
+**Deploy:** create an empty repo on github.com first, then ask the agent to init/commit/push and set up the remote, same as before.
