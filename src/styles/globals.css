@@ -1,1 +1,22 @@
 @import "tailwindcss";
+
+/* ─── Base Reset ─────────────────────────────────────────── */
+*, *::before, *::after {
+  box-sizing: border-box;
+}
+
+html, body {
+  margin: 0;
+  padding: 0;
+  background-color: #030303;
+  color: #F5F5F5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Prevent browser glow/outline on canvas */
+canvas {
+  outline: none;
+  border: none;
+  display: block;
+}
