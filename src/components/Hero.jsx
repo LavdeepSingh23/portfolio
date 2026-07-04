@@ -1,22 +1,20 @@
-import TextPressure from './reactbits/TextPressure';
+import TextType from './reactbits/TextType';
 
 export default function Hero() {
   return (
     <section className="relative min-h-[90vh] flex flex-col justify-center px-6 py-20 max-w-5xl mx-auto z-10 select-none">
       <div className="space-y-12">
-        {/* Name Heading using TextPressure variable font character stretch */}
-        <div className="h-[120px] md:h-[200px] w-full relative">
-          <TextPressure
-            text="LAVDEEP"
-            flex
-            alpha={false}
-            stroke={false}
-            width={true}
-            weight={true}
-            italic={true}
-            textColor="#F5F5F5"
-            strokeColor="#B5B5B5"
-            minFontSize={48}
+        {/* Name Heading using TextType typing effect */}
+        <div className="w-full">
+          <TextType
+            text={["[NAME]"]}
+            typingSpeed={75}
+            pauseDuration={1500}
+            showCursor={true}
+            cursorCharacter="_"
+            loop={true}
+            className="text-5xl md:text-7xl font-extrabold text-[#F5F5F5] uppercase tracking-tight"
+            cursorClassName="text-[#F5F5F5]"
           />
         </div>
 
