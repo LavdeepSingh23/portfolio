@@ -9,8 +9,21 @@ import Research from './components/Research'
 import Surprises from './components/Surprises'
 import Thoughts from './components/Thoughts'
 import Vision from './components/Vision'
-
 export default function App() {
+  const scrollToSection = (id) => {
+    const element = document.getElementById(id);
+    if (element) {
+      element.scrollIntoView({ behavior: 'smooth' });
+    }
+  };
+
+  const navItems = [
+    { label: 'Projects', onClick: () => scrollToSection('projects') },
+    { label: 'Research', onClick: () => scrollToSection('research') },
+    { label: 'Resume', onClick: () => window.open('/resume.pdf', '_blank'), isDistinct: true },
+    { label: 'Contact', onClick: () => scrollToSection('vision') },
+  ];
+
   return (
     <div className="relative min-h-screen bg-[#030303] text-[#F5F5F5] font-sans selection:bg-zinc-800 selection:text-zinc-200 overflow-x-hidden">
       {/* Global Background DotField — fixed full-screen, below all content */}
@@ -44,7 +57,7 @@ export default function App() {
       {/* Global Interaction click sparks wrapping the main application container */}
       <ClickSpark sparkColor="#F5F5F5" sparkSize={8} sparkRadius={20} sparkCount={10} duration={400}>
         {/* Navigation Dock */}
-        <Dock />
+        <Dock items={navItems} />
 
         {/* Page Sections — z-index: 1 sits above fixed DotGrid canvas (z-index: 0) */}
         <main className="relative z-10">
