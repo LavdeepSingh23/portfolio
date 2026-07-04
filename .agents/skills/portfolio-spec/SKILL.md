@@ -2,7 +2,7 @@
    name: portfolio-spec
    description: Layout, content, and structure spec for the portfolio website. Use when building, modifying, or reviewing any portfolio section (nav, hero, projects, research, animations, deployment).
    ---
-   
+
 
 
 # Portfolio Site Spec — "The Curious Duck" (Celestial Atlas)
@@ -77,45 +77,89 @@ Tagline: **"Following questions wherever they lead."**
 
 ## 3. Section-by-section detail
 
-### 3.0 Fixed nav
-- Transparent over hero, gets a solid `background` + subtle bottom border once `scrollY > window.innerHeight * 0.8`.
-- Left: a small constellation/star glyph as wordmark — **not** a literal duck icon or mascot. Right: Home / Projects / Research / Resume / Contact links + a "Resume" button that's visually distinct.
-- Mobile: collapse to a hamburger, but keep the Resume button always visible outside the hamburger.
+### 3.0 Atlas Marker (no navbar)
+
+No fixed navigation bar. A small, static, non-interactive marker sits
+top-left for the entire scroll:
+
+    ✦ The Curious Duck
+
+- Playfair Display, caption-sized, muted gold (#B89555) or secondary
+  text color (#A8A8B3) — understated, reads as a mark of provenance,
+  not a menu trigger.
+- No click behavior, no dropdown, no scroll-to links, no background
+  change on scroll. Stays exactly as-is from top to bottom of the page.
+- Exists only so the page doesn't feel directionless with zero chrome.
+  Plays no role in the recruiter fast-path — that's carried entirely
+  by the Hero's reference marks (§3.1).
 
 ### 3.1 Hero — "The Curious Duck Constellation"
-Two-column layout, deep space aesthetic. Core metaphor: a constellation is separate stars connected into meaning — your projects, research, and questions are the stars, together forming a duck shape that's discovered, not announced.
+
+Two-column layout, deep space aesthetic. Core metaphor: a constellation
+is separate stars connected into meaning — your projects, research, and
+questions are the stars, together forming a duck shape that's
+discovered, not announced, over the course of the scroll.
 
 **Layout — Desktop:** left column text, right column constellation SVG.
-**Layout — Mobile:** constellation on top, then text, then CTA buttons.
+**Layout — Mobile:** constellation on top, then text, then CTA marks.
 
 **Left side content:**
-- Small serif label: "ANATIS CURIOSA · Catalog Entry · 2024–Present" (Playfair Display, decorative only, never body text)
+- Small serif label: "ANATIS CURIOSA · Catalog Entry · 2024–Present"
+  (Playfair Display, decorative only, never body text)
 - Name in Inter, large
 - Tagline: "Following questions wherever they lead."
-- Short description (2-3 lines): CE student, ML/data systems/research
-- **Current Observation panel** — small block, e.g. "Investigating cross-dataset battery degradation patterns for remaining useful life prediction." Only keep this if you'll actually update it — stale content reads as abandoned.
-- CTA row: Resume (visually strongest), GitHub, LinkedIn
+- Short description (2-3 lines), plain first person — who you are,
+  what you study, what you're working on. Write it the way you'd
+  actually say it. No specimen/field-log narration, no "sighted," no
+  "currently charting behavior in" — the atlas feeling is carried by
+  the visual system (constellation, grid, typography), not by the
+  sentence structure. Say things directly and honestly.
+- Current Observation panel — same plain voice, one honest sentence
+  about what you're actually working on right now. Only keep this
+  section if you'll actually update it.
+- Reference marks (not buttons): Resume / GitHub / LinkedIn styled as
+  catalog footnotes — e.g. "REF. 01 — RESUME" — small caps or Playfair
+  numerals, gold text, no button background or border, clear hover
+  state. Same visual prominence as before: a recruiter should reach
+  these in the first viewport, no scrolling or clicking through a menu.
 
 **Right side — the constellation (centerpiece):**
-- Custom SVG duck-shaped constellation, built from real stars with real labels (not fake Latin): Curiosity (head), Research (heart), ML Systems (wing), Data Analytics (wing extension), Building (body), IEEE 2025 (tail), Thapar CE (foot), Projects (foot)
-- Bayer-style prefixes are fine (α ML Systems, β Research, etc.) — real astronomical convention, not fake
-- Ghost duck outline behind the stars at ~0.05 opacity max — barely visible, discovered not announced
-- Background: deep matte black (#0A0A0F), extremely faint coordinate grid + concentric circles, minimal scattered stars
+- Custom SVG duck-shaped constellation, 8 real stars with real labels
+  (not fake Latin): Curiosity (head), Research (heart), ML Systems
+  (wing), Data Analytics (wing extension), Building (body), IEEE 2025
+  (tail), Thapar CE (foot), Projects (foot). Bayer-style prefixes fine
+  (α ML Systems, β Research, etc.) — real astronomical convention.
+- Ghost duck outline behind the stars at ~0.05 opacity max — barely
+  visible, discovered not announced.
+- Background: deep matte black (#0A0A0F), extremely faint coordinate
+  grid + concentric circles, minimal scattered stars.
 
-**Color system:**
-| Token | Value |
-|---|---|
-| Background | #0A0A0F |
-| Primary text | #F4F4F2 |
-| Secondary text | #A8A8B3 |
-| Constellation gold | #D4B16A |
-| Muted gold | #B89555 |
-| Grid lines | rgba(212,177,106,0.06) |
-| Ghost duck | rgba(212,177,106,0.05) |
+***Progressive reveal (revised — zero-state Hero):**
+- On initial load: no stars, no lines, no ghost duck. Hero shows only
+  the left-column text (label, name, tagline, description, Current
+  Observation, reference marks) against the empty grid/star-field
+  background. The constellation space is visually present (grid,
+  faint background stars) but the duck constellation itself hasn't
+  started yet.
+- First scroll trigger (into the first section past Hero, e.g.
+  #quick-facts): reveals the initial pair — Curiosity + Building —
+  together, with one fully-drawn connecting line, in the same beat.
+  Never reveal a single isolated star with no line first; the first
+  reveal must land as a complete two-star shape, same as the old
+  on-load state, just delayed to this trigger point instead.
+- Each subsequent section trigger adds one more star + its connecting
+  line + label, same as before: same animation timing, toggleActions
+  "play none none none" (no reverse on scroll-up), label appears in
+  the same beat as the line.
+- Reduced motion: full 8-star constellation shows immediately on load
+  (unchanged from before — this bypasses the whole sequence).
 
-**Typography:** Inter for everything (name, body, nav, buttons) + Playfair Display only for the "ANATIS CURIOSA" catalog label and occasional decorative headings — never body text.
+**Color system, typography:** unchanged — see palette table in §11 and
+Inter/Playfair rules.
 
-**Avoid:** neon colors, excessive animation, dashboard aesthetics, cartoon duck mascot, floating particles, shooting stars, rotating planets, generic AI-generated look. No ocean/water imagery of any kind — this concept is fully sky/atlas-based, not underwater.
+**Avoid:** neon colors, excessive animation, dashboard aesthetics,
+cartoon duck mascot, floating particles, shooting stars, rotating
+planets, generic AI-generated look, water/ocean imagery.
 
 ### 3.2 Layer 1 — quick facts strip
 Lead with the differentiators, not the number everyone has. CGPA lives on the resume PDF, not the homepage headline.
@@ -191,12 +235,19 @@ Lightweight, can start as a placeholder:
 ---
 
 ## 4. Animation approach
-
-**Hero constellation (on load):**
-- Background stars fade in first
-- Constellation lines draw themselves via SVG `stroke-dasharray`, driven by `path.getTotalLength()` in JS (not hardcoded values — must stay correct if star positions change later)
-- Star nodes appear, then labels fade in, then text content fades upward
-- Ongoing: very slow, barely-noticeable star pulsing — no flashy effects
+**Hero constellation — progressive reveal (supersedes "on load" full draw):**
+- On load: only the initial 2-3 stars (per §3.1) draw in — background
+  stars fade first, then the initial constellation lines self-draw via
+  `path.getTotalLength()`, then those stars' labels fade in with them,
+  then left-column text fades upward. No other stars are present yet.
+- On scroll: each layer's star activates via ScrollTrigger tied to that
+  section's boundary — line draws in, label fades in, same easing/
+  timing as the initial on-load reveal so every activation feels like
+  the same event happening again, not a different animation.
+- Ongoing idle behavior (slow star pulse) applies only to
+  already-revealed stars.
+- Reduced motion: all stars in the final "fully revealed" state show
+  immediately, no draw-in sequence at any scroll position.
 
 **Hero constellation (interaction):**
 - Gentle mouse-parallax, max 5-10px movement. Constellation shifts slightly, grid shifts even less.
@@ -209,6 +260,15 @@ Lightweight, can start as a placeholder:
 A single tall, pre-composed background — not a per-frame procedurally-recalculated canvas. Density and layout are baked into one full-page-height SVG/canvas asset generated once (sparse near the top, denser toward the bottom), so no live star-position math runs on scroll. This keeps it cheap and jank-free, especially on mobile.
 
 Structure: `AtlasBackground.jsx` renders as `position: absolute; inset: 0; z-index: 0` inside a `position: relative` full-height page wrapper — it scrolls naturally with the page like any other tall element, no manual scroll-repositioning needed. All section content sits at `z-index: 1` with the same base background color (`#0A0A0F`), so there are no visible seams between sections — the depth feel comes from what's happening in the shared backdrop, not from section-to-section color changes.
+**Catalog-style headings:** every layer heading (Quick Facts, Curiosity,
+Projects, Research, etc.) is styled as a coordinate/catalog entry rather
+than a standard heading — e.g. "II. PROJECTS — CHARTED WORK," Playfair,
+small, gold — reinforcing one continuous atlas rather than stacked pages.
+
+**No boxed containers:** where the rgba(10,10,15,0.85) readability
+backdrop is needed behind content, feather the edge with a soft
+gradient falloff rather than a hard-edged rectangle, so cards read as
+regions of the same map, not bounded panels sitting on top of it.
 
 Depth zones (baked into the asset + a few lightweight ScrollTrigger-toggled layers on top):
 
