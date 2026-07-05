@@ -1,5 +1,4 @@
 import DotField from './components/reactbits/DotField'
-import ClickSpark from './components/reactbits/ClickSpark'
 import Dock from './components/reactbits/Dock'
 import Hero from './components/Hero'
 import QuickFacts from './components/QuickFacts'
@@ -54,23 +53,20 @@ export default function App() {
         />
       </div>
 
-      {/* Global Interaction click sparks wrapping the main application container */}
-      <ClickSpark sparkColor="#F5F5F5" sparkSize={8} sparkRadius={20} sparkCount={10} duration={400}>
-        {/* Navigation Dock */}
-        <Dock items={navItems} />
+      {/* Navigation Dock */}
+      <Dock items={navItems} />
 
-        {/* Page Sections — z-index: 1 sits above fixed DotGrid canvas (z-index: 0) */}
-        <main className="relative z-10">
-          <Hero />
-          <QuickFacts />
-          <Curiosity />
-          <Projects />
-          <Research />
-          <Surprises />
-          <Thoughts />
-          <Vision />
-        </main>
-      </ClickSpark>
+      {/* Page Sections — z-index: 1 sits above fixed DotGrid canvas (z-index: 0) */}
+      <main className="relative z-10">
+        <Hero />
+        <QuickFacts />
+        <Curiosity />
+        <Projects />
+        <Research />
+        <Surprises />
+        <Thoughts />
+        <Vision />
+      </main>
     </div>
   )
 }
